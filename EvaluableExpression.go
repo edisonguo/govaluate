@@ -178,24 +178,84 @@ func (this EvaluableExpression) evaluateStage(stage *evaluationStage, parameters
 	if stage.isShortCircuitable() {
 		switch stage.symbol {
 		case AND:
-			if left == false {
+			lax, laok := left.([]bool)
+			if laok {
+				allPass := true
+				for _, v := range lax {
+					if v != false {
+						allPass = false
+						break
+					}
+				}
+				if allPass {
+					return false, nil
+				}
+			} else if left == false {
 				return false, nil
 			}
 		case OR:
-			if left == true {
+			lax, laok := left.([]bool)
+			if laok {
+				allPass := true
+				for _, v := range lax {
+					if v != true {
+						allPass = false
+						break
+					}
+				}
+				if allPass {
+					return true, nil
+				}
+			} else if left == true {
 				return true, nil
 			}
 		case COALESCE:
-			if left != nil {
+			lax, laok := left.([]interface{})
+			if laok {
+				allPass := true
+				for _, v := range lax {
+					if v == nil {
+						allPass = false
+						break
+					}
+				}
+				if allPass {
+					return left, nil
+				}
+			} else if left != nil {
 				return left, nil
 			}
 
 		case TERNARY_TRUE:
-			if left == false {
+			lax, laok := left.([]bool)
+			if laok {
+				allPass := true
+				for _, v := range lax {
+					if v != false {
+						allPass = false
+						break
+					}
+				}
+				if allPass {
+					right = shortCircuitHolder
+				}
+			} else if left == false {
 				right = shortCircuitHolder
 			}
 		case TERNARY_FALSE:
-			if left != nil {
+			lax, laok := left.([]interface{})
+			if laok {
+				allPass := true
+				for _, v := range lax {
+					if v == nil {
+						allPass = false
+						break
+					}
+				}
+				if allPass {
+					right = shortCircuitHolder
+				}
+			} else if left != nil {
 				right = shortCircuitHolder
 			}
 		}
