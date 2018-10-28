@@ -74,7 +74,7 @@ These examples have all returned boolean values, but it's equally possible to re
 	parameters["mem_used"] = 512;
 
 	result, err := expression.Evaluate(parameters);
-	// result is now set to "50.0", the float64 value.
+	// result is now set to "50.0", the float32 value.
 ```
 
 You can also do date parsing, though the formats are somewhat limited. Stick to RF3339, ISO8061, unix date, or ruby date formats. If you're having trouble getting a date string to parse, check the list of formats actually used: [parsing.go:248](https://github.com/Knetic/govaluate/blob/0580e9b47a69125afa0e4ebd1cf93c49eb5a43ec/parsing.go#L258).
@@ -131,7 +131,7 @@ You may have cases where you want to call a function on a parameter during execu
 	functions := map[string]govaluate.ExpressionFunction {
 		"strlen": func(args ...interface{}) (interface{}, error) {
 			length := len(args[0].(string))
-			return (float64)(length), nil
+			return (float32)(length), nil
 		},
 	}
 
@@ -179,7 +179,7 @@ What operators and types does this support?
 * Modifiers: `+` `-` `/` `*` `&` `|` `^` `**` `%` `>>` `<<`
 * Comparators: `>` `>=` `<` `<=` `==` `!=` `=~` `!~`
 * Logical ops: `||` `&&`
-* Numeric constants, as 64-bit floating point (`12345.678`)
+* Numeric constants, as 32-bit floating point (`12345.678`)
 * String constants (single quotes: `'foobar'`)
 * Date constants (single quotes, using any permutation of RFC3339, ISO8601, ruby date, or unix date; date parsing is automatically tried with any string constant)
 * Boolean constants: `true` `false`
