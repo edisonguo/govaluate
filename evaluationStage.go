@@ -93,18 +93,18 @@ func addStage(left interface{}, right interface{}, parameters Parameters) (inter
 		return fmt.Sprintf("%v%v", left, right), nil
 	}
 
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] + rax[i]
 		}
@@ -112,7 +112,7 @@ func addStage(left interface{}, right interface{}, parameters Parameters) (inter
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] + rx
 		}
@@ -120,7 +120,7 @@ func addStage(left interface{}, right interface{}, parameters Parameters) (inter
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			res[i] = lx + rax[i]
 		}
@@ -135,18 +135,18 @@ func addStage(left interface{}, right interface{}, parameters Parameters) (inter
 
 }
 func subtractStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] - rax[i]
 		}
@@ -154,7 +154,7 @@ func subtractStage(left interface{}, right interface{}, parameters Parameters) (
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] - rx
 		}
@@ -162,7 +162,7 @@ func subtractStage(left interface{}, right interface{}, parameters Parameters) (
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			res[i] = lx - rax[i]
 		}
@@ -176,18 +176,18 @@ func subtractStage(left interface{}, right interface{}, parameters Parameters) (
 	return nil, fmt.Errorf("invalid operand for subtraction")
 }
 func multiplyStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] * rax[i]
 		}
@@ -195,7 +195,7 @@ func multiplyStage(left interface{}, right interface{}, parameters Parameters) (
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] * rx
 		}
@@ -203,7 +203,7 @@ func multiplyStage(left interface{}, right interface{}, parameters Parameters) (
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			res[i] = lx * rax[i]
 		}
@@ -217,18 +217,18 @@ func multiplyStage(left interface{}, right interface{}, parameters Parameters) (
 	return nil, fmt.Errorf("invalid operand for multiplication")
 }
 func divideStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] / rax[i]
 		}
@@ -236,7 +236,7 @@ func divideStage(left interface{}, right interface{}, parameters Parameters) (in
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			res[i] = lax[i] / rx
 		}
@@ -244,7 +244,7 @@ func divideStage(left interface{}, right interface{}, parameters Parameters) (in
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			res[i] = lx / rax[i]
 		}
@@ -258,85 +258,84 @@ func divideStage(left interface{}, right interface{}, parameters Parameters) (in
 	return nil, fmt.Errorf("invalid operand for division")
 }
 func exponentStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = math.Pow(lax[i], rax[i])
+			res[i] = float32(math.Pow(float64(lax[i]), float64(rax[i])))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = math.Pow(lax[i], rx)
+			res[i] = float32(math.Pow(float64(lax[i]), float64(rx)))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = math.Pow(lx, rax[i])
+			res[i] = float32(math.Pow(float64(lx), float64(rax[i])))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return math.Pow(lx, rx), nil
+		return float32(math.Pow(float64(lx), float64(rx))), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for exponential")
 
-	return math.Pow(left.(float64), right.(float64)), nil
 }
 func modulusStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = math.Mod(lax[i], rax[i])
+			res[i] = float32(math.Mod(float64(lax[i]), float64(rax[i])))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = math.Mod(lax[i], rx)
+			res[i] = float32(math.Mod(float64(lax[i]), float64(rx)))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = math.Mod(lx, rax[i])
+			res[i] = float32(math.Mod(float64(lx), float64(rax[i])))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return math.Mod(lx, rx), nil
+		return float32(math.Mod(float64(lx), float64(rx))), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for modulus")
@@ -346,11 +345,11 @@ func gteStage(left interface{}, right interface{}, parameters Parameters) (inter
 		return boolIface(left.(string) >= right.(string)), nil
 	}
 
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -391,11 +390,11 @@ func gtStage(left interface{}, right interface{}, parameters Parameters) (interf
 		return boolIface(left.(string) > right.(string)), nil
 	}
 
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -436,11 +435,11 @@ func lteStage(left interface{}, right interface{}, parameters Parameters) (inter
 		return boolIface(left.(string) <= right.(string)), nil
 	}
 
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -480,11 +479,11 @@ func ltStage(left interface{}, right interface{}, parameters Parameters) (interf
 	if isString(left) && isString(right) {
 		return boolIface(left.(string) < right.(string)), nil
 	}
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -521,11 +520,11 @@ func ltStage(left interface{}, right interface{}, parameters Parameters) (interf
 	return nil, fmt.Errorf("invalid operand for <")
 }
 func equalStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -562,11 +561,11 @@ func equalStage(left interface{}, right interface{}, parameters Parameters) (int
 	return nil, fmt.Errorf("invalid operand for ==")
 }
 func notEqualStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
@@ -688,11 +687,11 @@ func orStage(left interface{}, right interface{}, parameters Parameters) (interf
 
 }
 func negateStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			res[i] = -rax[i]
 		}
@@ -724,19 +723,19 @@ func invertStage(left interface{}, right interface{}, parameters Parameters) (in
 	return nil, fmt.Errorf("invalid operand for !")
 }
 func bitwiseNotStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(^int64(rax[i]))
+			res[i] = float32(^int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if rok {
-		return float64(^int64(rx)), nil
+		return float32(^int64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for ^")
@@ -885,207 +884,207 @@ func notRegexStage(left interface{}, right interface{}, parameters Parameters) (
 }
 
 func bitwiseOrStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) | int64(rax[i]))
+			res[i] = float32(int64(lax[i]) | int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) | int64(rx))
+			res[i] = float32(int64(lax[i]) | int64(rx))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(int64(lx) | int64(rax[i]))
+			res[i] = float32(int64(lx) | int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return float64(int64(lx) | int64(rx)), nil
+		return float32(int64(lx) | int64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for |")
 
 }
 func bitwiseAndStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) & int64(rax[i]))
+			res[i] = float32(int64(lax[i]) & int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) & int64(rx))
+			res[i] = float32(int64(lax[i]) & int64(rx))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(int64(lx) & int64(rax[i]))
+			res[i] = float32(int64(lx) & int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return float64(int64(lx) & int64(rx)), nil
+		return float32(int64(lx) & int64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for &")
 }
 func bitwiseXORStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) ^ int64(rax[i]))
+			res[i] = float32(int64(lax[i]) ^ int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(int64(lax[i]) ^ int64(rx))
+			res[i] = float32(int64(lax[i]) ^ int64(rx))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(int64(lx) ^ int64(rax[i]))
+			res[i] = float32(int64(lx) ^ int64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return float64(int64(lx) ^ int64(rx)), nil
+		return float32(int64(lx) ^ int64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for ^")
 }
 func leftShiftStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(uint64(lax[i]) << uint64(rax[i]))
+			res[i] = float32(uint64(lax[i]) << uint64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(uint64(lax[i]) << uint64(rx))
+			res[i] = float32(uint64(lax[i]) << uint64(rx))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(uint64(lx) << uint64(rax[i]))
+			res[i] = float32(uint64(lx) << uint64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return float64(uint64(lx) << uint64(rx)), nil
+		return float32(uint64(lx) << uint64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for <<")
 }
 func rightShiftStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]float64)
-	lx, lok := left.(float64)
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
 
-	rax, raok := right.([]float64)
-	rx, rok := right.(float64)
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(uint64(lax[i]) >> uint64(rax[i]))
+			res[i] = float32(uint64(lax[i]) >> uint64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]float64, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			res[i] = float64(uint64(lax[i]) >> uint64(rx))
+			res[i] = float32(uint64(lax[i]) >> uint64(rx))
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]float64, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
-			res[i] = float64(uint64(lx) >> uint64(rax[i]))
+			res[i] = float32(uint64(lx) >> uint64(rax[i]))
 		}
 		return res, nil
 	}
 
 	if lok && rok {
-		return float64(uint64(lx) >> uint64(rx)), nil
+		return float32(uint64(lx) >> uint64(rx)), nil
 	}
 
 	return nil, fmt.Errorf("invalid operand for >>")
@@ -1278,7 +1277,7 @@ func makeAccessorStage(pair []string) evaluationOperator {
 			return nil, errors.New("Method call '" + pair[0] + "." + pair[1] + "' did not return either one value, or a value and an error. Cannot interpret meaning.")
 		}
 
-		value = castToFloat64(value)
+		value = castToFloat32(value)
 		return value, nil
 	}
 }
@@ -1339,13 +1338,15 @@ func isBool(value interface{}) bool {
 	return false
 }
 
-func isFloat64(value interface{}) bool {
+func isFloat32(value interface{}) bool {
+
 	switch value.(type) {
-	case []float64:
+	case []float32:
 		return true
-	case float64:
+	case float32:
 		return true
 	}
+
 	return false
 }
 
@@ -1355,7 +1356,7 @@ func isFloat64(value interface{}) bool {
 */
 func additionTypeCheck(left interface{}, right interface{}) bool {
 
-	if isFloat64(left) && isFloat64(right) {
+	if isFloat32(left) && isFloat32(right) {
 		return true
 	}
 	if !isString(left) && !isString(right) {
@@ -1370,7 +1371,7 @@ func additionTypeCheck(left interface{}, right interface{}) bool {
 */
 func comparatorTypeCheck(left interface{}, right interface{}) bool {
 
-	if isFloat64(left) && isFloat64(right) {
+	if isFloat32(left) && isFloat32(right) {
 		return true
 	}
 	if isString(left) && isString(right) {

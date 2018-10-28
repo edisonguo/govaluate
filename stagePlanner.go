@@ -498,8 +498,8 @@ func findTypeChecks(symbol OperatorSymbol) typeChecks {
 		fallthrough
 	case BITWISE_XOR:
 		return typeChecks{
-			left:  isFloat64,
-			right: isFloat64,
+			left:  isFloat32,
+			right: isFloat32,
 		}
 	case PLUS:
 		return typeChecks{
@@ -515,12 +515,12 @@ func findTypeChecks(symbol OperatorSymbol) typeChecks {
 		fallthrough
 	case EXPONENT:
 		return typeChecks{
-			left:  isFloat64,
-			right: isFloat64,
+			left:  isFloat32,
+			right: isFloat32,
 		}
 	case NEGATE:
 		return typeChecks{
-			right: isFloat64,
+			right: isFloat32,
 		}
 	case INVERT:
 		return typeChecks{
@@ -528,7 +528,7 @@ func findTypeChecks(symbol OperatorSymbol) typeChecks {
 		}
 	case BITWISE_NOT:
 		return typeChecks{
-			right: isFloat64,
+			right: isFloat32,
 		}
 	case TERNARY_TRUE:
 		return typeChecks{
