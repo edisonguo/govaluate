@@ -36,7 +36,7 @@ func castToFloat32(value interface{}) interface{} {
 	case int:
 		return float32(value.(int))
 	case float64:
-		return float32(value.(float32))
+		return float32(value.(float64))
 
 	case []uint8:
 		res := make([]float32, len(t))
