@@ -243,11 +243,15 @@ func (this EvaluableExpression) evaluateStage(stage *evaluationStage, parameters
 				right = shortCircuitHolder
 			}
 		case TERNARY_FALSE:
-			lax, laok := left.([]interface{})
+			lax, laok := left.([]float32)
 			if laok {
 				allPass := true
+				noData, err := getNoData(parameters)
+				if err != nil {
+					return nil, err
+				}
 				for _, v := range lax {
-					if v == nil {
+					if v == noData {
 						allPass = false
 						break
 					}

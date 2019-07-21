@@ -82,6 +82,21 @@ func (this *evaluationStage) isShortCircuitable() bool {
 	return false
 }
 
+func getNoData(parameters Parameters) (float32, error) {
+	noData := float32(math.SmallestNonzeroFloat32)
+	val, err := parameters.Get("nodata")
+	if err == nil {
+		v, ok := val.(float32)
+		if !ok {
+			return 0, fmt.Errorf("invalid nodata value: %v", val)
+		}
+		noData = v
+	}
+
+	return noData, nil
+}
+
+
 func noopStageRight(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
 	return right, nil
 }
@@ -741,47 +756,52 @@ func bitwiseNotStage(left interface{}, right interface{}, parameters Parameters)
 	return nil, fmt.Errorf("invalid operand for ^")
 }
 func ternaryIfStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
+	noData, err := getNoData(parameters)
+	if err != nil {
+		return nil, err
+	}
+
 	lax, laok := left.([]bool)
 	lx, lok := left.(bool)
 
-	rax, raok := right.([]interface{})
-	rx, rok := right.(interface{})
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]interface{}, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			if lax[i] {
 				res[i] = rax[i]
 			} else {
-				res[i] = nil
+				res[i] = noData
 			}
 		}
 		return res, nil
 	}
 
 	if laok && rok {
-		res := make([]interface{}, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
 			if lax[i] {
 				res[i] = rx
 			} else {
-				res[i] = nil
+				res[i] = noData
 			}
 		}
 		return res, nil
 	}
 
 	if lok && raok {
-		res := make([]interface{}, len(rax))
+		res := make([]float32, len(rax))
 		for i := range rax {
 			if lx {
 				res[i] = rax[i]
 			} else {
-				res[i] = nil
+				res[i] = noData
 			}
 		}
 		return res, nil
@@ -791,27 +811,32 @@ func ternaryIfStage(left interface{}, right interface{}, parameters Parameters) 
 		if lx {
 			return rx, nil
 		} else {
-			return nil, nil
+			return noData, nil
 		}
 	}
 
 	return nil, fmt.Errorf("invalid operand for ternary if")
 }
 func ternaryElseStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
-	lax, laok := left.([]interface{})
-	lx, lok := left.(interface{})
+	noData, err := getNoData(parameters)
+	if err != nil {
+		return nil, err
+	}
 
-	rax, raok := right.([]interface{})
-	rx, rok := right.(interface{})
+	lax, laok := left.([]float32)
+	lx, lok := left.(float32)
+
+	rax, raok := right.([]float32)
+	rx, rok := right.(float32)
 
 	if laok && raok {
 		if len(lax) != len(rax) {
 			return nil, fmt.Errorf("different array sizes: %v, %v", len(lax), len(rax))
 		}
 
-		res := make([]interface{}, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			if lax[i] == nil {
+			if lax[i] == noData {
 				res[i] = rax[i]
 			} else {
 				res[i] = lax[i]
@@ -821,9 +846,9 @@ func ternaryElseStage(left interface{}, right interface{}, parameters Parameters
 	}
 
 	if laok && rok {
-		res := make([]interface{}, len(lax))
+		res := make([]float32, len(lax))
 		for i := range lax {
-			if lax[i] == nil {
+			if lax[i] == noData {
 				res[i] = rx
 			} else {
 				res[i] = lax[i]
@@ -832,10 +857,10 @@ func ternaryElseStage(left interface{}, right interface{}, parameters Parameters
 		return res, nil
 	}
 
-	if (lok || lx == nil) && raok {
-		res := make([]interface{}, len(rax))
+	if (lok || lx == noData) && raok {
+		res := make([]float32, len(rax))
 		for i := range rax {
-			if lx == nil {
+			if lx == noData {
 				res[i] = rax[i]
 			} else {
 				res[i] = lx
@@ -844,8 +869,8 @@ func ternaryElseStage(left interface{}, right interface{}, parameters Parameters
 		return res, nil
 	}
 
-	if (lok || lx == nil) && rok {
-		if lx == nil {
+	if (lok || lx == noData) && rok {
+		if lx == noData {
 			return rx, nil
 		} else {
 			return lx, nil
