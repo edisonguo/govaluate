@@ -96,7 +96,6 @@ func getNoData(parameters Parameters) (float32, error) {
 	return noData, nil
 }
 
-
 func noopStageRight(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
 	return right, nil
 }
