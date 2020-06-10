@@ -534,6 +534,12 @@ func ltStage(left interface{}, right interface{}, parameters Parameters) (interf
 	return nil, fmt.Errorf("invalid operand for <")
 }
 func equalStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
+	ls, lsok := left.(string)
+	rs, rsok := right.(string)
+	if lsok && rsok {
+		return ls == rs, nil
+	}
+
 	lax, laok := left.([]float32)
 	lx, lok := left.(float32)
 
@@ -575,6 +581,12 @@ func equalStage(left interface{}, right interface{}, parameters Parameters) (int
 	return nil, fmt.Errorf("invalid operand for ==")
 }
 func notEqualStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
+	ls, lsok := left.(string)
+	rs, rsok := right.(string)
+	if lsok && rsok {
+		return ls != rs, nil
+	}
+
 	lax, laok := left.([]float32)
 	lx, lok := left.(float32)
 
